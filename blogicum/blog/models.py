@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-import constants as c
+import constants as constant
 
 User = get_user_model()
 
@@ -23,7 +23,7 @@ class Publication(models.Model):
 
 class Category(Publication):
     title = models.CharField(
-        max_length=c.TEXT_LENGTH,
+        max_length=constant.TEXT_LENGTH,
         verbose_name='Заголовок'
     )
     description = models.TextField(
@@ -41,12 +41,12 @@ class Category(Publication):
         verbose_name_plural = 'Категории'
 
     def __str__(self):
-        return self.title[:c.RETURN_TEXT_LENGTH]
+        return self.title[:constant.RETURN_TEXT_LENGTH]
 
 
 class Location(Publication):
     name = models.CharField(
-        max_length=c.TEXT_LENGTH,
+        max_length=constant.TEXT_LENGTH,
         verbose_name='Название места'
     )
 
@@ -55,12 +55,12 @@ class Location(Publication):
         verbose_name_plural = 'Местоположения'
 
     def __str__(self):
-        return self.name[:c.RETURN_TEXT_LENGTH]
+        return self.name[:constant.RETURN_TEXT_LENGTH]
 
 
 class Post(Publication):
     title = models.CharField(
-        max_length=c.TEXT_LENGTH,
+        max_length=constant.TEXT_LENGTH,
         verbose_name='Заголовок'
     )
     text = models.TextField(
@@ -75,27 +75,27 @@ class Post(Publication):
         User,
         on_delete=models.CASCADE,
         verbose_name='Автор публикации',
-        related_name='post_info'
+        related_name='posts'
     )
     location = models.ForeignKey(
         Location,
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='Местоположение',
-        related_name='post_info'
+        related_name='posts'
     )
     category = models.ForeignKey(
         Category,
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='Категория',
-        related_name='post_info'
+        related_name='posts'
     )
 
     class Meta:
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
-        ordering = ['-pub_date']
+        ordering = ('-pub_date', 'author', 'location', 'category')
 
     def __str__(self):
-        return self.title[:c.RETURN_TEXT_LENGTH]
+        return self.title[:constant.RETURN_TEXT_LENGTH]
