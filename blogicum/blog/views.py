@@ -35,11 +35,11 @@ def post_detail(request, post_id):
 def category_posts(request, slug):
     category = get_object_or_404(
         Category.objects.filter(
-        is_published=True),
-        slug=slug,
+            is_published=True), slug=slug,
     )
     return render(
         request,
         'blog/category.html',
-        {'category': category,'posts': request_post_data().filter(category=category)}
+        {'category': category,
+         'posts': request_post_data().filter(category=category)}
     )

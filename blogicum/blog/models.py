@@ -1,7 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-import constants as c 
+import constants as c
+
 User = get_user_model()
 
 
@@ -34,7 +35,7 @@ class Category(Publication):
         help_text='Идентификатор страницы для URL; '
                   'разрешены символы латиницы, цифры, дефис и подчёркивание.'
     )
-    
+
     class Meta:
         verbose_name = 'категория'
         verbose_name_plural = 'Категории'
